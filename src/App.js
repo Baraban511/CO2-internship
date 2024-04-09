@@ -32,10 +32,10 @@ export default function App() {
         <thead>
           <tr>
             <th scope="col">Country</th>
-            <th scope="col">ISO code</th>
             <th scope="col">Year</th>
+            <th scope="col">ISO code</th>
             <th scope="col">Total</th>
-            <th scope="col">Coil</th>
+            <th scope="col">Coal</th>
             <th scope="col">Oil</th>
             <th scope="col">Gas</th>
             <th scope="col">Cement</th>
