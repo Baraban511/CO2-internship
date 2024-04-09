@@ -30,7 +30,7 @@ export default function App() {
           onChange={handleSearchChange}
         ></input>
       </div>
-      <table className="h-screen w-screen">
+      <table className="w-full">
         <thead>
           <tr>
             <th scope="col">Country</th>
