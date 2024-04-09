@@ -1,7 +1,7 @@
 import { ResponsiveChoropleth } from "@nivo/geo";
 import dataTotal from "./data.json";
 import feature from "./world_countries.json";
-
+import { useState, useEffect } from "react";
 const maxYear = Math.max(...dataTotal.map((item) => item.Year));
 const filteredData = dataTotal.filter(
   (item) =>
@@ -9,10 +9,36 @@ const filteredData = dataTotal.filter(
 );
 const dMax = Math.max(...filteredData.map((item) => item.Total));
 const dMin = Math.min(...filteredData.map((item) => item.Total));
+
 export const MyResponsiveChoropleth = () => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    const handleEsc = (event) => {
+      if (event.keyCode === 27) setSelectedCountry(null);
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    // Supprimer l'écouteur d'événements lors du nettoyage
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [selectedCountry]);
+
   const data = filteredData.map((item) => ({
     id: item.ISO,
     value: item.Total,
+    Oil: item.Oil,
+    Gas: item.Gas,
+    Coal: item.Coal,
+    Cement: item.Cement,
+    Flaring: item.Flaring,
+    Other: item.Other,
   }));
   return (
     <div className="h-screen w-screen">
@@ -26,6 +52,10 @@ export const MyResponsiveChoropleth = () => {
         label="properties.name"
         valueFormat=".2s"
         projectionType="naturalEarth1"
+        projectionScale={180}
+        onClick={(feature, event) => {
+          setSelectedCountry(feature);
+        }}
         projectionTranslation={[0.5, 0.5]}
         projectionRotation={[0, 0, 0]}
         enableGraticule={true}
@@ -34,7 +64,7 @@ export const MyResponsiveChoropleth = () => {
         borderColor="#152538"
         defs={[]}
         fill={[]}
-        legends={[          
+        legends={[
           {
             anchor: "bottom-left",
             direction: "column",
@@ -60,6 +90,76 @@ export const MyResponsiveChoropleth = () => {
           },
         ]}
       />
+      {selectedCountry && (
+        <div
+          class="relative z-50"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                      <button onClick={() => setSelectedCountry(null)}>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3
+                        class="text-base font-semibold leading-6 text-gray-900"
+                        id="modal-title"
+                      >
+                        {selectedCountry.properties.name}
+                      </h3>
+                      <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                          <p>Émissions de CO2 : {selectedCountry.data.value}</p>
+                          {selectedCountry.data.Oil ? (
+                            <p>Oil : {selectedCountry.data.Oil}</p>
+                          ) : null}
+                          {selectedCountry.data.Gas ? (
+                            <p>Gas : {selectedCountry.data.Gas}</p>
+                          ) : null}
+                          {selectedCountry.data.Coal ? (
+                            <p>Coal : {selectedCountry.data.Coal}</p>
+                          ) : null}
+                          {selectedCountry.data.Cement ? (
+                            <p>Cement : {selectedCountry.data.Cement}</p>
+                          ) : null}
+                          {selectedCountry.data.Flaring ? (
+                            <p>Flaring : {selectedCountry.data.Flaring}</p>
+                          ) : null}
+                          {selectedCountry.data.Other ? (
+                            <p>Other : {selectedCountry.data.Other}</p>
+                          ) : null}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

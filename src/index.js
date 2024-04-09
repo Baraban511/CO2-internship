@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <MyResponsiveChoropleth />,
   },
   {
-    path: "/array",
+    path: "/data",
     element: <App />,
   },
 ]);
