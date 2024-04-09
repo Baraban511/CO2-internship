@@ -90,7 +90,7 @@ export const MyResponsiveChoropleth = () => {
           },
         ]}
       />
-      {selectedCountry && (
+      {selectedCountry && selectedCountry.data && (
         <div
           class="relative z-50"
           aria-labelledby="modal-title"
