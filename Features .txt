@@ -1,0 +1,3 @@
+Features :
+- Tri par quantitée
+- Recherche par intervalle
