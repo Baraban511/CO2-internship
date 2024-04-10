@@ -92,11 +92,20 @@ export default function Add() {
       }),
     })
       .then((response) => {
-        if (response.status === 200) {
-          console.log(response);
+        return response.text();
+      })
+      .then((data) => {
+        if (!data) {
+          console.log("Data added successfully");
           alert("Data added successfully");
+        } else if (data) {
+          alert(data); // Afficher le texte de la réponse
+          console.log(data); // Afficher le texte de la réponse
         }
       })
-      .then((data) => console.log(data));
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error:", error);
+      });
   }
 }
