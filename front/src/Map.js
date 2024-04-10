@@ -146,7 +146,7 @@ export const MyResponsiveChoropleth = () => {
                         <div class="mt-2">
                           <p class="text-sm text-gray-500">
                             <p>
-                              Émissions de CO2 : {selectedCountry.data.value}
+                              CO2 emissions : {selectedCountry.data.value}
                             </p>
                             {selectedCountry.data.Oil ? (
                               <p>Oil : {selectedCountry.data.Oil}</p>
