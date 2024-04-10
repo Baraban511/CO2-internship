@@ -73,7 +73,7 @@ export default function Add() {
     </>
   );
   function post() {
-    fetch("http://localhost/add", {
+    fetch("https://data-site-ir8z.onrender.com/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

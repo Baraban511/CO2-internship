@@ -7,7 +7,7 @@ export const MyResponsiveChoropleth = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
-    fetch(`http://${window.location.hostname}/data`)
+    fetch(`https://data-site-ir8z.onrender.com/data`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);

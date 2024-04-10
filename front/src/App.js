@@ -5,7 +5,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState(data);
   useEffect(() => {
-    fetch(`http://${window.location.hostname}/data`)
+    fetch(`https://data-site-ir8z.onrender.com/data`)
       .then((response) => response.json())
       .then((data) => {
         setData(data);
