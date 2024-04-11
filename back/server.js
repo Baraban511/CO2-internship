@@ -24,8 +24,8 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
-  var data = loadJsonFile("./data.json");
-  var maxYear = Math.max(...data.map((item) => item.Year));
+  var year = new Date().getFullYear();
+  console.log(year - req.body.Year);
   fs.readFile("./data.json", "utf8", (err, data) => {
     if (err) {
       res.send(`Error reading file from disk: ${err}`);
@@ -43,8 +43,9 @@ app.post("/add", (req, res) => {
       res.send("Year is required");
       return;
     }
-    if (maxYear - 10 < req.body.Year < maxYear) {
-      res.send("Year have to be less than 2021");
+    if (req.body.Year >= (year - 10) && req.body.Year <= year) {
+    } else {
+      res.send("Year must be between " + (year - 10) + " and " + year);
       return;
     }
     if (req.body.ISO.length !== 3) {

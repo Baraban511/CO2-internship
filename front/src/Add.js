@@ -73,7 +73,11 @@ export default function Add() {
     </>
   );
   function post() {
-    fetch("https://data-site-ir8z.onrender.com/add", {
+    const server =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost"
+        : "https://data-site-ir8z.onrender.com";
+    fetch(server + "/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
