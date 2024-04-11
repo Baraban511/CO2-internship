@@ -63,7 +63,6 @@ export default function App() {
           <tbody>
             {filteredData?.map((item, index) =>
               item.Total ? (
-                item.Year === maxYear ? (
                   <tr key={index}>
                     <th scope="row">{item.Country}</th>
                     <td className={item.Year ? "" : "red" || ""}>
@@ -91,7 +90,6 @@ export default function App() {
                       {item.Capita}
                     </td>
                   </tr>
-                ) : null
               ) : null
             )}
           </tbody>

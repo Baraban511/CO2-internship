@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 
 const app = express();
 const port = 80;
@@ -14,11 +14,12 @@ app.use((req, res, next) => {
 });
 
 app.get("/data", (req, res) => {
-  var data = loadJsonFile('./data.json');
+  var data = loadJsonFile("./data.json");
   var maxYear = Math.max(...data.map((item) => item.Year));
   // Filtrer les données pour ne renvoyer que les éléments ayant la valeur 'Year' la plus élevée
-  var data = data.filter((item) => item.Year === maxYear);
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  var data = data.filter(
+    (item) => item.Year > maxYear - 10 && item.Year <= maxYear
+  );
   res.json(data);
 });
 
@@ -38,6 +39,10 @@ app.post("/add", (req, res) => {
     }
     if (!req.body.Year && req.body.Year === null) {
       res.send("Year is required");
+      return;
+    }
+    if (maxYear - 10 < req.body.Year < maxYear) {
+      res.send("Year have to be less than 2021");
       return;
     }
     if (req.body.ISO.length !== 3) {
@@ -73,12 +78,11 @@ app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
 
-
 function loadJsonFile(filePath) {
   // Supprimer le fichier du cache
   delete require.cache[path.resolve(filePath)];
 
   // Charger le fichier
-  let data = fs.readFileSync(filePath, 'utf8');
+  let data = fs.readFileSync(filePath, "utf8");
   return JSON.parse(data);
 }
