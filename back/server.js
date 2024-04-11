@@ -24,6 +24,8 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/add", (req, res) => {
+  var data = loadJsonFile("./data.json");
+  var maxYear = Math.max(...data.map((item) => item.Year));
   fs.readFile("./data.json", "utf8", (err, data) => {
     if (err) {
       res.send(`Error reading file from disk: ${err}`);
