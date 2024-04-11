@@ -32,6 +32,19 @@ export const MyResponsiveChoropleth = () => {
     return <p>Loading...</p>;
    }
 
+   var result = data.reduce((acc, item) => {
+    // Si le pays n'est pas encore dans l'accumulateur ou si l'année est plus grande
+    if (!acc[item.Country] || item.Year > acc[item.Country].Year) {
+      acc[item.Country] = item;
+    }
+    return acc;
+  }, {});
+  
+  // Convertir l'objet en tableau
+  result = Object.values(result);
+  
+  console.log(result);
+
     const maxYear = Math.max(...data.map((item) => item.Year));
     const filteredData = data.filter(
       (item) =>
@@ -39,8 +52,8 @@ export const MyResponsiveChoropleth = () => {
         item.Total &&
         item.Country !== "Global"
     );
-    const dMax = Math.max(...filteredData.map((item) => item.Total));
-    const dMin = Math.min(...filteredData.map((item) => item.Total));
+    const dMax = Math.max(...filteredData.map((item) => item.Total));//Pour domaine
+    const dMin = Math.min(...filteredData.map((item) => item.Total));//Pour domaine
     const dMap = filteredData.map((item) => ({
       id: item.ISO,
       value: item.Total,

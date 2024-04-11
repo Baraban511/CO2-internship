@@ -12,13 +12,9 @@ export default function App() {
         setFilteredData(data);
       });
   }, []);
-
   if (!data) {
     return <p>Loading...</p>;
   }
-
-    const maxYear = filteredData ? Math.max(...filteredData.map((item) => item.Year)) : 0;
-
     const handleSearchChange = (event) => {
       setSearch(event.target.value);
       searchFunction(event.target.value);
