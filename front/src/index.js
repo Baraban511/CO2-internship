@@ -15,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+    errorElement: <Landing />,
   },
   {
     path: "/map",
