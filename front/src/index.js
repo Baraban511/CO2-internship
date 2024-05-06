@@ -9,7 +9,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Navbar from "./components/navbar";
 import Add from "./Add.js";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +35,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Navbar />
     <RouterProvider router={router} />
     <Analytics />
-    <SpeedInsights />
   </React.StrictMode>
 );
