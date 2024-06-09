@@ -21,7 +21,7 @@ export default function Landing() {
               Data to enrich your online business
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Made by <strong><a href="https://barab.live">barab</a></strong>
+              Made by <strong><a href="https://barab.me">barab.</a></strong>
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
